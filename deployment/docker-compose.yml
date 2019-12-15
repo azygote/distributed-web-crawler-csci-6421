@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  rabbitmq:
+    image: library/rabbitmq:alpine
+    networks:
+      - appnetwork
+    ports:
+      - "4369:4369"
+      - "5671:5671"
+      - "5672:5672"
+      - "15672:15672"
+      - "25672:25672"
+    environment:
+      RABBITMQ_DEFAULT_USER: tianyuge
+      RABBITMQ_DEFAULT_PASS: tianyuge
+  mongo:
+    image: library/mongo
+    networks:
+      - appnetwork
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: tianyuge
+      MONGO_INITDB_ROOT_PASSWORD: tianyuge
+    volumes:
+      - ./mongo/data:/data/db
+networks:
+  appnetwork:

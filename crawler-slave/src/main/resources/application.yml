@@ -1,0 +1,14 @@
+server:
+  port: ${crawler.slave-port}
+
+spring:
+  http:
+    encoding:
+      force: true
+  rabbitmq:
+    addresses: ${crawler.rabbit-uri}
+  data:
+    mongodb:
+      uri: ${crawler.mongo-db-uri}
+      repositories:
+        type: imperative

@@ -1,0 +1,33 @@
+import java.nio.charset.StandardCharsets
+import java.nio.file.FileSystems
+
+allprojects {
+    group = 'org.gty'
+    version = '1.0.0.RELEASE'
+    description = 'Distributed Web Crawler for CSCI 6421'
+}
+
+subprojects { subProject ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'project-report'
+
+    java.sourceCompatibility = JavaVersion.VERSION_13
+    java.targetCompatibility = JavaVersion.VERSION_13
+    [compileJava, compileTestJava]*.options*.encoding = "${StandardCharsets.UTF_8}"
+    javadoc.options.encoding = "${StandardCharsets.UTF_8}"
+
+    repositories {
+        jcenter()
+    }
+
+    clean.doLast {
+        project.delete "$projectDir${FileSystems.default.separator}out${FileSystems.default.separator}"
+    }
+
+    // for Java 12 and 13 features
+    tasks.withType(JavaCompile).each {
+        it.options.compilerArgs.add('--enable-preview')
+    }
+}
+

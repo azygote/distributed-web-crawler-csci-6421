@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
+include 'crawler-master'
+include 'crawler-slave'
+
+rootProject.name = 'distributed-web-crawler-csci-6421'
