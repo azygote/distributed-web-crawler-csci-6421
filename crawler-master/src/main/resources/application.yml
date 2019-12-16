@@ -12,3 +12,5 @@ spring:
       uri: ${crawler.mongo-db-uri}
       repositories:
         type: imperative
+  thymeleaf:
+    cache: false
