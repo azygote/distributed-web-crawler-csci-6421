@@ -39,9 +39,15 @@ public class CrawlerMasterController {
         service.stop();
     }
 
-    @GetMapping(value = "/api/get-slaves")
+    @GetMapping(value = "/api/get-slaves", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Map<String, Slave> getSlaves() {
         return service.getSlaves();
+    }
+
+    @GetMapping(value = "/api/inspect-slaves", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Map<String, Object>> inspectSlaves() {
+        return service.inspectSlaves();
     }
 }

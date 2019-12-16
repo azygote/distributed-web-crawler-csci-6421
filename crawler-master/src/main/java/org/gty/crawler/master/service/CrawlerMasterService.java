@@ -92,6 +92,20 @@ public class CrawlerMasterService {
         return map;
     }
 
+    public Map<String, Map<String, Object>> inspectSlaves() {
+        Map<String, Map<String, Object>> map = new HashMap<>();
+        for (int i = 0; i < slaveList.size(); i++) {
+            Map<String, Object> innerMap = new HashMap<>();
+            Slave slave = slaveList.get(i);
+            innerMap.put("nodeName", slave.getNodeName());
+            innerMap.put("nodeAddress", slave.getNodeAddress());
+            innerMap.put("nodePort", slave.getNodePort());
+            innerMap.put("nodeCount", client.getAssignedUrlCount(slave).get("count"));
+            map.put(String.valueOf(i), innerMap);
+        }
+        return map;
+    }
+
     @RabbitListener(id = RABBIT_LISTENER_ID,
         queues = "${crawler.rabbit-queue-name}",
         autoStartup = "false",
