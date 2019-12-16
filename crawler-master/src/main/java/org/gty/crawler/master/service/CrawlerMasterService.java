@@ -20,8 +20,10 @@ import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -37,6 +39,7 @@ public class CrawlerMasterService {
     private final CrawlerSlaveClient client;
     private final List<Slave> slaveList;
     private final AtomicReference<SeedUrl> seedUrl;
+    private final AtomicBoolean seedUrlAlreadyEnqueued;
 
     public CrawlerMasterService(Executor masterExecutor,
                                 CrawlerMasterInitializerProperties properties,
@@ -52,6 +55,7 @@ public class CrawlerMasterService {
 
         slaveList = new CopyOnWriteArrayList<>();
         seedUrl = new AtomicReference<>();
+        seedUrlAlreadyEnqueued = new AtomicBoolean(false);
     }
 
     public Master registerNode(Slave node) {
@@ -69,12 +73,15 @@ public class CrawlerMasterService {
     }
 
     public void start() {
-        amqpService.addUrl(seedUrl.get().getUrl());
+        if (!seedUrlAlreadyEnqueued.get()) {
+            amqpService.addUrl(seedUrl.get().getUrl());
+            seedUrlAlreadyEnqueued.set(true);
+        }
         registry.getListenerContainer(RABBIT_LISTENER_ID).start();
     }
 
     public void stop() {
-        registry.getListenerContainer(RABBIT_LISTENER_ID).stop();
+        CompletableFuture.runAsync(() -> registry.getListenerContainer(RABBIT_LISTENER_ID).stop(), masterExecutor);
     }
 
     public Map<String, Slave> getSlaves() {
