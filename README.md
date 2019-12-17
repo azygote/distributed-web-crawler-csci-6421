@@ -11,7 +11,7 @@ $ ./gradlew clean bootJar
 
 ### To start a master node
 ```
-$ java -jar ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \ 
       --crawler.rabbit-uri="" \
       --crawler.rabbit-queue-name="" \
@@ -23,7 +23,7 @@ $ java -jar ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
 
 ### To start a slave node
 ```
-$ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \
       --crawler.rabbit-uri="" \
       --crawler.rabbit-queue-name="" \
@@ -39,7 +39,7 @@ $ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
 ## Example of a cluster of 1 master node and 3 slave nodes
 ### Node: master node on 127.0.0.1:8080
 ```
-$ java -jar ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \
       --crawler.rabbit-uri="amqp://tianyuge:tianyuge@localhost:5672" \
       --crawler.rabbit-queue-name="crawler" \
@@ -51,7 +51,7 @@ $ java -jar ./crawler-master/build/libs/crawler-master-1.0.0.RELEASE.jar \
 
 ### Node: john on 127.0.0.1:27651 as a slave node
 ```
-$ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \
       --crawler.rabbit-uri="amqp://tianyuge:tianyuge@localhost:5672" \
       --crawler.rabbit-queue-name="crawler" \
@@ -66,7 +66,7 @@ $ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
 
 ### Node: jane on 127.0.0.1:57812 as a slave node
 ```
-$ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \
       --crawler.rabbit-uri="amqp://tianyuge:tianyuge@localhost:5672" \
       --crawler.rabbit-queue-name="crawler" \
@@ -81,7 +81,7 @@ $ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
 
 ### Node: alex on 127.0.0.1:37771 as a normal node
 ```
-$ java -jar ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
+$ java -jar --enable-preview ./crawler-slave/build/libs/crawler-slave-1.0.0.RELEASE.jar \
       --spring.profiles.active=default \
       --crawler.rabbit-uri="amqp://tianyuge:tianyuge@localhost:5672" \
       --crawler.rabbit-queue-name="crawler" \
